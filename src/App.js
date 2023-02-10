@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import { createContext, useState } from 'react';
 import './App.css';
+import Test from './components/test/test'
+import Header from './components/test/widget/header';
 
+
+export const ThemeContext = createContext();
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <div className={`App h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-slate-50 text-gray-900'}`}>
+    <Header handleToggleSwitch={toggleDarkMode}/>
+     <Test/>
     </div>
+    </ThemeContext.Provider>
   );
 }
 
